@@ -3,6 +3,8 @@ var pulseButton = document.getElementById("pulse");
 var DVDButton = document.getElementById("dvd");
 var stopButton = document.getElementById("stop");
 var clearButton = document.getElementById("clear");
+var svgWidth = svg.getAttribute("width");
+var svgHeight = svg.getAttribute("height");
 var timer;
 
 var changeColor = function(){
@@ -32,7 +34,7 @@ var pulse = function() {
         svg.appendChild(circle);
 
         radius = radius + radiusModifier;
-        if ((radius == 0) || (radius == 250)){
+        if ((radius == 0) || (radius == 300)){
             radiusModifier = radiusModifier * -1;
         };
     };
@@ -50,9 +52,8 @@ var dvd = function() {
     var newY = 0;
     var newColor = changeColor();
     
-    //doesn't work
-    //var newX = (Math.random() * (svg.offsetWidth-2*rectWidth))+rectWidth;
-    //var newY = (Math.random() * (svg.offsetHeight-2*rectHeight))+rectHeight;
+    var newX = (Math.random() * (svgWidth-2*rectWidth))+rectWidth;
+    var newY = (Math.random() * (svgHeight-2*rectHeight))+rectHeight;
     
     var draw = function() {
         if (svg.firstChild){
@@ -65,11 +66,11 @@ var dvd = function() {
         rectangle.setAttribute("height", rectHeight);
         rectangle.setAttribute("fill", newColor);
         svg.appendChild(rectangle);
-        if ((newX + rectWidth > 800)||(newX < 0)){
+        if ((newX + rectWidth > svgWidth)||(newX < 0)){
             speedModifierX = speedModifierX * -1;
             newColor = changeColor();
         };
-        if ((newY + rectHeight > 600)||(newY < 0)){
+        if ((newY + rectHeight > svgHeight)||(newY < 0)){
             speedModifierY = speedModifierY * -1;
             newColor = changeColor();
         };
@@ -95,4 +96,3 @@ pulseButton.addEventListener("click", pulse);
 DVDButton.addEventListener("click", dvd);
 stopButton.addEventListener("click", stop);
 clearButton.addEventListener("click", clear);
-console.log(svg.offsetHeight);
